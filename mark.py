@@ -1,6 +1,4 @@
-from pathlib import Path
-
-app_code = r'''import io
+import io
 import zipfile
 from pathlib import Path
 
@@ -25,7 +23,6 @@ arquivos = st.file_uploader(
     accept_multiple_files=True,
 )
 
-# Limpa resultados antigos se o conjunto de uploads mudar.
 assinatura_atual = tuple(
     (arquivo.name, arquivo.size) for arquivo in arquivos
 ) if arquivos else ()
@@ -119,7 +116,6 @@ if resultados:
     st.divider()
     st.subheader("Resultados")
 
-    # Evita nomes repetidos dentro do ZIP.
     nomes_usados = {}
     arquivos_zip = []
 
@@ -136,7 +132,6 @@ if resultados:
 
         arquivos_zip.append((nome_zip, item["markdown"]))
 
-    # Cria o ZIP inteiramente em memória.
     buffer_zip = io.BytesIO()
 
     with zipfile.ZipFile(
@@ -205,24 +200,3 @@ if erros:
 
     for item in erros:
         st.error(f"**{item['arquivo']}**: {item['erro']}")
-'''
-
-requirements = '''streamlit
-markitdown[pdf]==0.1.7
-'''
-
-base = Path("/mnt/data")
-files = {
-    "mark.py": app_code,
-    "mark_pdf.txt": app_code,
-    "requirements.txt": requirements,
-}
-
-for name, content in files.items():
-    (base / name).write_text(content, encoding="utf-8")
-
-compile(app_code, "mark.py", "exec")
-
-print("Arquivos criados e sintaxe validada:")
-for name in files:
-    print(f"- /mnt/data/{name}")
