@@ -1,2 +1,2 @@
 streamlit
-markitdown[pdf,docx,pptx,xlsx,xls,outlook]==0.1.7
+markitdown[pdf]==0.1.7
