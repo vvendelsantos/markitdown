@@ -6,7 +6,7 @@ import streamlit as st
 from markitdown import MarkItDown, StreamInfo
 
 
-MAX_PDFS = 10
+MAX_PDFS = 30
 
 st.set_page_config(
     page_title="PDF para Markdown",
