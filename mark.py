@@ -1,6 +1,4 @@
-from pathlib import Path
-
-app_code = '''import io
+import io
 from pathlib import Path
 
 import streamlit as st
@@ -56,30 +54,27 @@ if arquivo is not None:
                     extension=extensao,
                 )
 
-                md = MarkItDown()
+                conversor = MarkItDown()
 
-                resultado = md.convert_stream(
+                resultado = conversor.convert_stream(
                     stream,
                     stream_info=info,
                 )
 
                 st.session_state["markdown"] = resultado.markdown
-                st.session_state["nome_saida"] = (
-                    f"{Path(nome).stem}.md"
-                )
+                st.session_state["nome_saida"] = f"{Path(nome).stem}.md"
 
             st.success("Conversão concluída.")
 
         except Exception as erro:
+            st.error("Não foi possível converter o arquivo.")
             st.exception(erro)
 
 if "markdown" in st.session_state:
     markdown = st.session_state["markdown"]
     nome_saida = st.session_state["nome_saida"]
 
-    tab1, tab2 = st.tabs(
-        ["Visualização", "Markdown bruto"]
-    )
+    tab1, tab2 = st.tabs(["Visualização", "Markdown bruto"])
 
     with tab1:
         st.markdown(markdown)
@@ -88,23 +83,9 @@ if "markdown" in st.session_state:
         st.code(markdown, language="markdown")
 
     st.download_button(
-        "Baixar Markdown",
+        label="Baixar Markdown",
         data=markdown.encode("utf-8"),
         file_name=nome_saida,
         mime="text/markdown",
         type="primary",
     )
-'''
-
-requirements = '''streamlit
-markitdown[pdf,docx,pptx,xlsx,xls,outlook]==0.1.7
-'''
-
-base = Path("/mnt/data")
-(base / "mark_corrigido.txt").write_text(app_code, encoding="utf-8")
-(base / "requirements_corrigido.txt").write_text(requirements, encoding="utf-8")
-
-compile(app_code, "mark_corrigido.txt", "exec")
-
-print("Arquivos corrigidos criados.")
-print(requirements)
