@@ -59,6 +59,27 @@ SHORTS_INICIAIS = [
     "https://www.youtube.com/shorts/XbjRSK7hsC4",
 ]
 
+
+# MURAL DE AVALIAÇÕES (5 estrelas cada) — comentários enviados pelo proprietário.
+# É uma transcrição estática: não atualiza as avaliações do Google automaticamente.
+# O comentário de Rodrigo agora está completo, com link para o perfil informado.
+# Ivan deixou 5 estrelas, mas não escreveu comentário.
+AVALIACOES = [
+    {'nome': 'Elias Eterno', 'data': 'Há 36 semanas (informação enviada)', 'comentario': 'profissional de qualidade, pontual, preço justo, educado, atencioso... só tenho que agradecer, resolveu meu problema rápido. super indico.', 'resposta': 'Obrigado por confiar no meu serviço, Elias. Estou à disposição!'},
+    {'nome': 'Concept Imobi Recepção', 'data': 'Há 44 semanas (informação enviada)', 'comentario': 'Profissional qualida', 'resposta': 'Obrigado por confiar no meu serviço. Estou à disposição!'},
+    {'nome': 'Magnolia C Santos', 'data': '16/05/2024', 'comentario': 'Excelente profissional. Ótimo serviço!', 'resposta': 'Muito obrigado, Magnolia. Estou à disposição.'},
+    {'nome': 'Rodrigo Live', 'data': '07/04/2024', 'comentario': 'Um senhor simples e com preço super competitivo, gostei do serviço, resolveu meu problema na simplicidade, não conversa muito durante o trabalho, mas se puxar assunto ele fala tranquilo, recomendo a todos o serviço desse senhor, rapaz honesto e trabalhador, Sr Ancelmo, Deus te abençoe e ilumine seu trabalho, e espero que muito mais clientes te procurem, recomendo sem sombras de dúvidas!', 'resposta': 'Muito obrigado, Rodrigo. Estou à disposição sempre.', 'perfil': 'https://www.google.com/maps/contrib/116070550129170371499/reviews?hl=pt-BR'},
+    {'nome': 'Ana Clara Moreira', 'data': '04/04/2024', 'comentario': 'Muito atencioso e resolveu meu problema. Recomendo.', 'resposta': 'Fico feliz por ter resolvido o seu problema, Ana Clara. Estou à disposição!'},
+    {'nome': 'FABIO SANTOS', 'data': '02/10/2023', 'comentario': 'Pontualidade, execução rápida e cliente satisfeito...eu super indico.Serviço executado no condomínio Vivendas Tropical - Loteamento São Braz.', 'resposta': 'Obrigado por confiar no meu serviço, Fábio. Estou à disposição!'},
+    {'nome': 'Jadson do Lamarão', 'data': '05/01/2023', 'comentario': 'Um excelente profissional que atendeu prontamente e pontualmente os serviços realizados nas farmácias FTb do Bairro.\nSuper indico', 'resposta': 'Agradeço a confiança, Jadson. Estou à disposição!'},
+    {'nome': 'Marcelo Alves', 'data': '14/10/2022', 'comentario': 'Eu gostei do servicios do proficional muito bom o trabalho dele', 'resposta': 'Obrigado, Marcelo. Sempre que precisar estarei aqui.'},
+    {'nome': 'Flavio Vieira Matos Neto', 'data': '10/10/2022', 'comentario': 'Iria pagar um pedreiro para poder desentupir o ralo do banheiro e Anselmo conseguiu resolver em questão de minutos, muito bom e barato', 'resposta': 'Obrigado pelo feedback, Flávio. Estou à disposição!'},
+    {'nome': 'Suzy Gomes', 'data': '07/10/2022', 'comentario': 'Maravilhoso', 'resposta': 'Obrigado, Suzy.'},
+    {'nome': 'IVAN NUNES FILHO Nunes filho', 'data': '05/10/2022', 'comentario': '', 'resposta': '👍🏾'},
+    {'nome': 'Johnlenon Costa Ribeiro', 'data': '28/09/2022', 'comentario': 'Muito bom', 'resposta': '👍🏾'},
+    {'nome': 'Samuel Benson (Samuca)', 'data': '26/09/2022', 'comentario': 'O único que conseguiu resolver meu problema!!! O El Chijolito agradece o serviço. Muitíssimo obrigado Sr Anvelmo.', 'resposta': 'Obrigado pelo feedback, Samuel. Estou à disposição!'},
+]
+
 # ARTE OFICIAL DO DESENTUPIDOR ANCELMO INCORPORADA AO CÓDIGO.
 # Assim o boneco aparece no quadrado branco mesmo que você publique somente
 # o arquivo streamlit_app.py, sem precisar enviar a pasta assets.
@@ -473,6 +494,9 @@ ARTE_ANCELMO_BASE64 = (
     "uTxYWQHAs3cun5nysDHHzHWs71pNTXxpYAAAAAAAA="
 )
 
+# Ícone verde de WhatsApp em SVG: aparece em cada chamada para orçamento.
+WHATSAPP_ICON = """<svg class="wa-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="15" fill="#25D366"/><path d="M9.3 23.3 10.4 20a9 9 0 1 1 3.3 2.4z" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/><path d="M12.4 12c.3-.4.7-.4 1-.1l1.2 1.2c.3.3.2.6 0 .9l-.6.6c.7 1.3 1.7 2.3 3 2.9l.7-.7c.3-.3.7-.3 1 0l1.1 1c.3.3.3.7 0 1-.7 1-1.7 1.2-2.8.8-2.8-1-4.9-3-5.7-5.7-.3-.8.3-1.6 1.1-1.9z" fill="#fff"/></svg>"""
+
 CSS = r"""
 <style>
 :root { --brand: #AD1811; --deep: #850e0b; --ink:#4f100f; --cream:#fff8f5; --paper:#fffefe; --muted:#ffe0d8; }
@@ -482,12 +506,10 @@ html, body, .stApp, [data-testid="stAppViewContainer"] { background:var(--brand)
 [data-testid="stMain"] {background:var(--brand)!important;}
 [data-testid="stBottom"] {background:transparent!important;}
 .anz, .anz * { box-sizing:border-box; }
-.anz {font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; color:white;line-height:1.52; max-width:100%; overflow-x:clip;}
+.anz {font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; color:white;line-height:1.52; max-width:100%; overflow-x:visible;}
 .anz a {text-decoration:none!important}
 .anz .topline {display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 3px 18px;border-bottom:1px solid rgba(255,255,255,.25)}
 .anz .wordmark {display:flex;align-items:center;gap:12px;min-width:0}
-.anz .mark {display:grid;place-items:center;flex:0 0 51px;width:51px;height:51px;border:2px solid white;border-radius:14px;box-shadow:inset 0 0 0 4px rgba(255,255,255,.11)}
-.anz .mark svg{height:28px;width:28px;stroke:white}
 .anz .brandname{display:flex;flex-direction:column;line-height:1.12;font-weight:900;letter-spacing:.025em;font-size:21px}
 .anz .brandname small{font-size:10px;font-weight:750;letter-spacing:.22em;margin-top:6px;opacity:.86}
 .anz .navlinks{display:flex;gap:24px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
@@ -539,6 +561,7 @@ html, body, .stApp, [data-testid="stAppViewContainer"] { background:var(--brand)
 .anz .band strong{font-size:20px;line-height:1.22;display:block}
 .anz .band p{font-size:12px;color:#ffe2db;margin-top:9px;line-height:1.65}
 .anz .band .buttons{margin:0;justify-content:flex-end}
+
 .anz .placeholder{display:grid;place-items:center;text-align:center;min-height:255px;padding:25px;border:1.5px dashed rgba(255,255,255,.48);border-radius:15px;background:radial-gradient(circle at 100% 0%,rgba(255,255,255,.09),transparent 50%),#8b120e;color:white;margin-top:23px}
 .anz .placeholder .placeholder-icon{font-size:41px;line-height:1}
 .anz .placeholder b{display:block;font-size:20px;margin-top:14px;line-height:1.28}
@@ -561,11 +584,6 @@ html, body, .stApp, [data-testid="stAppViewContainer"] { background:var(--brand)
 .anz .contact-panel h2{font-size:clamp(26px,3vw,42px);font-weight:900;line-height:1.1;letter-spacing:-.035em}
 .anz .contact-panel p{color:#7f5551;margin-top:12px;font-size:14px;line-height:1.7}
 .anz .contact-panel .btn{background:var(--brand);color:#fff!important;white-space:nowrap}
-.anz .foot{border-top:1px solid rgba(255,255,255,.3);padding:29px 4px 85px;margin-top:52px;display:flex;justify-content:space-between;align-items:flex-start;gap:23px;flex-wrap:wrap;color:#fff}
-.anz .foot b{font-size:19px}
-.anz .foot small{display:block;font-size:12px;opacity:.84;margin-top:8px}
-.anz .foot a{color:#fff!important;text-decoration:underline!important;text-underline-offset:4px;font-weight:800}
-.anz .foot .links{display:flex;gap:20px;flex-wrap:wrap;font-size:13px}
 .anz .floating-cta{position:fixed;z-index:1000;right:clamp(12px,2vw,26px);bottom:22px;background:white;color:var(--brand)!important;border:2px solid var(--brand);border-radius:60px;padding:13px 18px;box-shadow:0 9px 40px rgba(47,0,0,.4);font:800 13px ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;gap:8px;text-decoration:none!important}
 .anz .floating-cta span{background:var(--brand);color:white;border-radius:50%;width:24px;height:24px;display:grid;place-items:center}
 .anz a:hover{filter:brightness(.96)}
@@ -582,7 +600,6 @@ html, body, .stApp, [data-testid="stAppViewContainer"] { background:var(--brand)
 .anz .topline{padding-top:8px;align-items:flex-start}
 .anz .brandname{font-size:15px}
 .anz .brandname small{font-size:8px;letter-spacing:.15em}
-.anz .mark{width:42px;height:42px;flex-basis:42px;border-radius:11px}
 .anz .navlinks .nav-cta{font-size:11px;padding:10px}
 .anz h1{font-size:clamp(36px,11vw,51px)}
 .anz .hero{gap:36px}
@@ -597,14 +614,127 @@ html, body, .stApp, [data-testid="stAppViewContainer"] { background:var(--brand)
 .anz .services,.anz .photos-grid,.anz .area-grid{grid-template-columns:1fr}
 .anz .service{min-height:145px}
 .anz .band{padding:25px 18px}
+
 .anz .video-callout{grid-template-columns:1fr;padding:25px}
 .anz .video-callout .btn{white-space:normal}
 .anz .contact-panel{padding:26px 20px}
 .anz .contact-panel .btn{white-space:normal}
 .anz .photo img{height:250px}
-.anz .foot{padding-bottom:94px}
-.anz .floating-cta{padding:12px 14px;bottom:12px;right:10px}
+.anz .floating-cta{width:54px;height:54px;justify-content:center;padding:8px;bottom:12px;right:10px;font-size:0;gap:0}
+.anz .floating-cta span{width:32px;height:32px;font-size:16px}
 }
+
+/* Rodapé com fundo de ponta a ponta e conteúdo centralizado. */
+.anz .site-footer {
+  position:relative; left:50%; width:100vw; margin-left:-50vw;
+  margin-top:75px; padding:0; background:#182831; color:#f9fbfc;
+  border-top:5px solid #f1c5a9;
+  background-image:radial-gradient(circle at 88% 5%,rgba(255,255,255,.05),transparent 37%);
+}
+.anz .site-footer-inner{width:min(100% - 48px,1200px);margin:0 auto;padding:54px 0 27px}
+.anz .footer-main{display:grid;grid-template-columns:1.22fr .72fr 1fr;gap:58px;align-items:start}
+.anz .footer-wordmark{display:block;font-size:clamp(21px,2.2vw,29px);line-height:1.15;letter-spacing:-.035em;font-weight:950;color:#fff}
+.anz .footer-company p{max-width:335px;color:#d1dae0;line-height:1.7;font-size:13px;margin:17px 0 16px}
+.anz .footer-tag{display:inline-flex;align-items:center;gap:8px;background:#ffffff13;color:#fff;border:1px solid #ffffff31;padding:9px 13px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:.035em}
+.anz .footer-tag .live-dot{background:#a8f1c4;box-shadow:0 0 0 4px #a8f1c41e}
+.anz .footer-title{font-size:12px;color:#f0bda7;letter-spacing:.16em;text-transform:uppercase;font-weight:900;margin:2px 0 18px}
+.anz .footer-shortcuts{display:grid;gap:11px}
+.anz .footer-shortcuts a{display:block;color:#f2f5f6!important;font-size:13px;font-weight:700;width:fit-content;line-height:1.5}
+.anz .footer-shortcuts a:hover,.anz .footer-shortcuts a:focus-visible{text-decoration:underline!important;text-underline-offset:5px}
+.anz .footer-contacts p{font-size:13px;color:#d1dae0;line-height:1.6;margin-bottom:13px}
+.anz .footer-phone{display:inline-flex;align-items:center;gap:8px;color:#fff!important;font-size:17px;font-weight:900;margin-bottom:20px;line-height:1.2}
+.anz .social-links{display:flex;gap:13px;flex-wrap:wrap;align-items:flex-start}
+.anz .social-links a{display:flex;flex-direction:column;align-items:center;gap:7px;color:#f4f7fa!important;font-size:11px;font-weight:750;min-width:61px}
+.anz .social-circle{width:47px;height:47px;display:grid;place-items:center;border-radius:13px;border:1px solid #ffffff4d;background:#ffffff15;transition:background .16s ease,transform .16s ease}
+.anz .social-circle svg{width:24px;height:24px;display:block;fill:none;stroke:#fff;stroke-width:1.85;stroke-linecap:round;stroke-linejoin:round}
+.anz .social-links a:hover .social-circle{background:#ad1811;transform:translateY(-2px)}
+.anz .social-links a:focus-visible,.anz .footer-bottom a:focus-visible{outline:3px solid #fff;outline-offset:5px}
+.anz .footer-respect{display:grid;grid-template-columns:46px minmax(0,1fr);gap:20px;align-items:start;margin-top:47px;padding:25px 27px;border:1px solid #ffffff35;border-left:4px solid #f0bda7;border-radius:12px;background:#ffffff0b}
+.anz .footer-respect-icon{width:44px;height:44px;display:grid;place-items:center;background:#ffffff18;border-radius:12px;font-size:23px}
+.anz .footer-respect h2{font-size:clamp(17px,1.65vw,22px);font-weight:900;letter-spacing:-.02em;line-height:1.25;margin:1px 0 9px;color:#fff}
+.anz .footer-respect p{font-size:13px;line-height:1.75;color:#e0e8ec;max-width:990px}
+.anz .footer-respect strong{color:#fff;font-weight:900}
+.anz .footer-bottom{display:flex;align-items:center;justify-content:flex-start;gap:20px;flex-wrap:wrap;border-top:1px solid #ffffff27;margin-top:30px;padding-top:22px;font-size:11px;color:#c8d3d8}
+.anz .footer-bottom a{color:#fff!important;font-weight:800;margin-left:25px}
+@media(max-width:880px){
+ .anz .footer-main{grid-template-columns:1fr 1fr;gap:30px}
+ .anz .footer-company{grid-column:1/-1}
+}
+@media(max-width:570px){
+ .anz .site-footer{margin-top:55px}
+ .anz .site-footer-inner{width:min(100% - 34px,1200px);padding:36px 0 92px}
+ .anz .footer-main{grid-template-columns:1fr 1fr;gap:30px 18px}
+ .anz .footer-company{grid-column:1/-1}
+ .anz .footer-contacts{grid-column:1/-1}
+ .anz .footer-shortcuts{gap:10px}
+ .anz .footer-respect{grid-template-columns:1fr;margin-top:32px;padding:23px 18px;gap:10px}
+ .anz .footer-respect p{font-size:12.5px}
+ .anz .footer-bottom{align-items:flex-start}
+ .anz .footer-bottom a{margin-left:0}
+}
+
+/* WhatsApp: ícone oficial verde/branco em todos os atalhos de orçamento. */
+.anz .wa-icon{display:inline-block;width:23px;height:23px;flex:none;vertical-align:middle;filter:drop-shadow(0 1px 2px #0000000e)}
+.anz .nav-cta{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.anz .nav-cta .wa-icon{width:21px;height:21px}
+.anz .ribbon>a{padding:20px 10px;text-align:center;background:var(--brand);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff!important}
+.anz .ribbon>a:hover{background:#8e120e}
+.anz .ribbon>a .wa-icon{width:19px;height:19px;margin-bottom:4px}
+.anz .ribbon>a strong{color:#fff}
+.anz .ribbon>a span{color:#ffe1da}
+.anz .floating-cta{gap:9px}
+.anz .floating-cta .wa-icon{width:28px;height:28px}
+.anz .footer-wa-shortcut{display:inline-flex!important;align-items:center;gap:8px}
+.anz .footer-wa-shortcut .wa-icon{width:20px;height:20px}
+/* Mural de avaliações, responsivo e com respostas expansíveis. */
+.anz .reviews-section{padding-top:76px}
+.anz .reviews-heading{display:grid;grid-template-columns:minmax(0,1fr) 185px;align-items:end;gap:30px}
+.anz .reviews-summary{padding:18px 15px;border-radius:14px;border:1px solid #ffffff56;background:#ffffff12;text-align:center}
+.anz .reviews-summary .review-stars{font-size:23px;letter-spacing:2px}
+.anz .reviews-summary strong{display:block;font-size:23px;line-height:1.35;color:white}
+.anz .reviews-summary span{font-size:12px;color:#ffe6e2}
+.anz .reviews-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin-top:27px;align-items:stretch}
+.anz .review-card{color:#432a2b;background:#fffdfc;border:1px solid #f8d7d0;border-radius:15px;padding:21px;display:flex;flex-direction:column;box-shadow:0 10px 26px #54030024;min-width:0;overflow-wrap:anywhere}
+.anz .review-author{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.anz .review-avatar{width:41px;height:41px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;background:#fce4dd;color:#9c1b15;font-size:12px;font-weight:900;letter-spacing:.015em}
+.anz .review-person{display:flex;flex-direction:column;min-width:0;gap:3px}
+.anz .review-person b{font-weight:900;font-size:13px;color:#531614;line-height:1.26}
+.anz .review-profile-link{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.anz .review-profile-link:hover,.anz .review-profile-link:focus{color:#a51913}
+.anz .review-person small{font-size:11px;line-height:1.2;color:#8a6360}
+.anz .review-stars{color:#e7a41d;letter-spacing:2px;font-size:20px;line-height:1.35;white-space:nowrap}
+.anz .review-card .review-quote{color:#493b39;font-size:13px;line-height:1.7;margin:12px 0 18px}
+.anz .review-card .review-no-text{font-size:12px;line-height:1.55;color:#8a6360;font-style:italic;margin:12px 0 18px}
+.anz .review-reply{border-top:1px solid #f3ddd6;padding-top:12px;margin-top:auto;font-size:12px}
+.anz .review-reply summary{list-style:none;cursor:pointer;color:#9d201a;font-weight:900;line-height:1.45}
+.anz .review-reply summary::-webkit-details-marker{display:none}
+.anz .review-reply summary:after{content:'+';margin-left:7px;color:#9d201a}
+.anz .review-reply[open] summary:after{content:'−'}
+.anz .review-reply p{font-size:12px;color:#6e4d4b;line-height:1.6;margin-top:9px;padding:12px 14px;background:#fff1ec;border-radius:8px}
+.anz .reviews-note{margin-top:14px;color:#ffddd4;font-size:11px;line-height:1.65}
+.anz .reviews-cta{margin-top:28px;background:#7c130f;border:1px solid #ffffff38;padding:22px 24px;border-radius:15px;display:flex;gap:25px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.anz .reviews-cta strong{display:block;font-size:19px;line-height:1.3}
+.anz .reviews-cta span{display:block;font-size:12px;color:#ffe4dd;margin-top:5px}
+@media(max-width:880px){
+.anz .reviews-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.anz .reviews-heading{grid-template-columns:minmax(0,1fr) 160px}
+}
+@media(max-width:570px){
+.anz .nav-cta .wa-icon{width:20px;height:20px}
+.anz .floating-cta{width:55px;height:55px;padding:9px;font-size:0;border-radius:50%}
+.anz .floating-cta .wa-icon{width:32px;height:32px}
+.anz .floating-cta span{display:none}
+.anz .reviews-section{padding-top:52px}
+.anz .reviews-grid{grid-template-columns:1fr;gap:13px}
+.anz .reviews-heading{grid-template-columns:1fr;gap:16px}
+.anz .reviews-summary{width:190px;max-width:100%;text-align:left;padding:13px 16px}
+.anz .reviews-summary .review-stars{font-size:20px}
+.anz .reviews-summary strong{font-size:18px}
+.anz .review-card{padding:20px}
+.anz .reviews-cta{padding:20px 17px}
+.anz .reviews-cta .btn{font-size:12px;width:100%}
+}
+
 </style>
 """
 
@@ -646,10 +776,10 @@ def header_services() -> str:
     return CSS + f"""
 <div class="anz" id="inicio">
   <header class="topline">
-    <div class="wordmark"><div class="mark">{PIPE_SVG}</div><div class="brandname">DESENTUPIDOR ANCELMO<small>ARACAJU E REGIÃO • SE</small></div></div>
+    <div class="wordmark"><div class="brandname">DESENTUPIDOR ANCELMO<small>ARACAJU E REGIÃO • SE</small></div></div>
     <nav class="navlinks" aria-label="Navegação principal">
-      <a href="#servicos">SERVIÇOS</a><a href="#galeria">FOTOS</a><a href="#videos">VÍDEOS</a><a href="#atendimento">ÁREA DE ATENDIMENTO</a>
-      <a class="nav-cta" href="{WHATSAPP_ORCAMENTO}" target="_blank" rel="noopener noreferrer">PEÇA UM ORÇAMENTO ↗</a>
+      <a href="#servicos">SERVIÇOS</a><a href="#galeria">FOTOS</a><a href="#videos">VÍDEOS</a><a href="#avaliacoes">AVALIAÇÕES</a><a href="#atendimento">ÁREA DE ATENDIMENTO</a>
+      <a class="nav-cta" href="{WHATSAPP_ORCAMENTO}" target="_blank" rel="noopener noreferrer">{WHATSAPP_ICON} PEÇA UM ORÇAMENTO ↗</a>
     </nav>
   </header>
   <section class="hero" aria-labelledby="hero-title">
@@ -657,14 +787,15 @@ def header_services() -> str:
       <div class="kicker"><span class="live-dot"></span> ATENDIMENTO 24 HORAS • TODOS OS DIAS</div>
       <h1 id="hero-title">Entupiu?<br>O <span class="hero-highlight">Ancelmo</span><br>resolve.</h1>
       <p class="lead">Desentupimento de tubulações residenciais e comerciais em <b>Aracaju, Nossa Senhora do Socorro e Barra dos Coqueiros.</b> Atendimento com preço justo, qualidade e compromisso com você.</p>
-      <div class="buttons"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="{WHATSAPP_ORCAMENTO}">✆ &nbsp; Orçamento grátis no WhatsApp ↗</a><a class="btn btn-outline" href="#servicos">Conheça os serviços ↓</a></div>
+      <div class="buttons"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="{WHATSAPP_ORCAMENTO}">{WHATSAPP_ICON} Orçamento grátis no WhatsApp ↗</a><a class="btn btn-outline" href="#servicos">Conheça os serviços ↓</a></div>
       <div class="hero-foot"><span>Visita gratuita</span><span>Emitimos nota fiscal</span><span>Atendemos 24h</span></div>
     </div>
     <div class="art-wrap"><div class="art-card">{artwork_html()}</div><div class="art-label"><b>24h</b><span>Todos os dias<br>da semana</span></div></div>
   </section>
   <div class="ribbon" aria-label="Diferenciais">
-    <div><strong>24 HORAS</strong><span>7 dias por semana</span></div><div><strong>ORÇAMENTO GRÁTIS</strong><span>Fale pelo WhatsApp</span></div><div><strong>VISITA GRÁTIS</strong><span>Sem custo de visita</span></div><div><strong>NOTA FISCAL</strong><span>Serviço com documentação</span></div>
+    <div><strong>24 HORAS</strong><span>7 dias por semana</span></div><a class="ribbon-quote" href="{WHATSAPP_ORCAMENTO}" target="_blank" rel="noopener noreferrer" aria-label="Pedir orçamento grátis pelo WhatsApp">{WHATSAPP_ICON}<strong>ORÇAMENTO GRÁTIS</strong><span>Fale pelo WhatsApp</span></a><div><strong>VISITA GRÁTIS</strong><span>Sem custo de visita</span></div><div><strong>NOTA FISCAL</strong><span>Serviço com documentação</span></div>
   </div>
+
   <section class="section" id="servicos">
     <span class="section-eyebrow">O QUE FAZEMOS</span><h2 class="section-title">Desentupimento para sua casa<br>ou seu comércio.</h2>
     <p class="section-description">Problemas com entupimentos? Conte com atendimento especializado para os principais pontos da tubulação.</p>
@@ -676,7 +807,7 @@ def header_services() -> str:
       <div class="service"><div class="service-icon">↪</div><h3>Tubulações residenciais</h3><p>Desobstrução de redes de esgoto e tubulações em residências.</p></div>
       <div class="service"><div class="service-icon">▥</div><h3>Tubulações comerciais</h3><p>Atendimento a empresas, lojas e estabelecimentos comerciais.</p></div>
     </div>
-    <div class="band"><div><strong>Preço justo. Trabalho bem feito.</strong><p>Priorizamos a qualidade dos procedimentos e a satisfação de cada cliente. Conte com a nossa equipe quando precisar.</p></div><div class="buttons"><a class="btn btn-primary" href="{WHATSAPP_ORCAMENTO}" target="_blank" rel="noopener noreferrer">Solicitar atendimento ↗</a></div></div>
+    <div class="band"><div><strong>Preço justo. Trabalho bem feito.</strong><p>Priorizamos a qualidade dos procedimentos e a satisfação de cada cliente. Conte com a nossa equipe quando precisar.</p></div><div class="buttons"><a class="btn btn-primary" href="{WHATSAPP_ORCAMENTO}" target="_blank" rel="noopener noreferrer">{WHATSAPP_ICON} Solicitar atendimento ↗</a></div></div>
   </section>
 </div>
 """
@@ -842,14 +973,103 @@ def video_footer_html() -> str:
     return f"""<div class="anz"><div class="video-callout"><div><strong>Assista também no nosso canal!</strong><p>Vídeos dos serviços e atualizações do Desentupidor Ancelmo.</p></div><a class="btn" href="{YOUTUBE}" target="_blank" rel="noopener noreferrer">▶ Ver canal no YouTube ↗</a></div></div>"""
 
 
+
+
+def avaliacoes_html() -> str:
+    """Mural com avaliações compartilhadas pela empresa e respostas do proprietário."""
+    cards = []
+    for numero, av in enumerate(AVALIACOES, start=1):
+        nome = escape(av["nome"])
+        data = escape(av["data"])
+        comentario = av["comentario"]
+        resposta = escape(av["resposta"]).replace("\n", "<br>")
+        partes = [p[:1].upper() for p in av["nome"].split() if p and p[0].isalpha()]
+        iniciais = escape("".join(partes[:2])) or "★"
+        if comentario:
+            texto = escape(comentario).replace("\n", "<br>")
+            conteudo = f'<p class="review-quote">“{texto}”</p>'
+        else:
+            conteudo = '<p class="review-no-text">Avaliou com 5 estrelas, sem comentário escrito.</p>'
+        # Se houver um endereço público informado pelo cliente, o nome será clicável.
+        if av.get("perfil"):
+            perfil = escape(av["perfil"], quote=True)
+            nome_html = f'<a class="review-profile-link" href="{perfil}" target="_blank" rel="noopener noreferrer" aria-label="Ver perfil de {nome} no Google Maps">{nome} ↗</a>'
+        else:
+            nome_html = nome
+        cards.append(f"""
+        <article class="review-card">
+          <div class="review-author"><span class="review-avatar" aria-hidden="true">{iniciais}</span>
+            <div class="review-person"><b>{nome_html}</b><small>{data}</small></div>
+          </div>
+          <div class="review-stars" role="img" aria-label="5 de 5 estrelas">★★★★★</div>
+          {conteudo}
+          <details class="review-reply"><summary>💬 Resposta do Ancelmo</summary>
+            <p>{resposta}</p></details>
+        </article>""")
+    return f"""<div class="anz"><section class="section reviews-section" id="avaliacoes">
+      <div class="reviews-heading"><div><span class="section-eyebrow">QUEM CONTRATOU, RECOMENDA</span>
+        <h2 class="section-title">A confiança dos nossos clientes.</h2>
+        <p class="section-description">Um mural de depoimentos de quem já contou com o trabalho do Ancelmo. Veja os comentários e abra as respostas do profissional.</p></div>
+        <div class="reviews-summary" aria-label="13 avaliações de cinco estrelas enviadas pela empresa"><div class="review-stars">★★★★★</div><strong>13 avaliações</strong><span>5 estrelas cada</span></div>
+      </div>
+      <div class="reviews-grid">{"".join(cards)}</div>
+      <p class="reviews-note">Avaliações transcritas conforme os textos compartilhados pela empresa; este mural não é atualizado automaticamente pelo Google.</p>
+      <div class="reviews-cta"><div><strong>Também precisa de ajuda?</strong><span>Peça um orçamento gratuito e fale direto com a nossa equipe.</span></div>
+        <a class="btn btn-primary" href="{WHATSAPP_ORCAMENTO}" target="_blank" rel="noopener noreferrer" aria-label="Falar com o Desentupidor Ancelmo no WhatsApp para orçamento">{WHATSAPP_ICON} Orçamento pelo WhatsApp ↗</a></div>
+    </section></div>"""
+
 def footer_html() -> str:
+    """Faixa de rodapé em cor contrastante, com atalhos e redes sociais acessíveis."""
+    instagram_icon = """<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.3"/><circle cx="12" cy="12" r="4.1"/><circle cx="18" cy="6.5" r=".9" fill="currentColor" stroke="none"/></svg>"""
+    youtube_icon = """<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z" fill="currentColor" stroke="none"/></svg>"""
+    whatsapp_icon = """<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 11.5a8.3 8.3 0 0 1-12.4 7.3L3 20l1.3-4.5a8.3 8.3 0 1 1 16-4"/><path d="M8.5 8.7c.3-.6.7-.7 1.1-.3l.9 1c.3.4.2.7-.1 1l-.3.4c.7 1.1 1.6 2 2.8 2.6l.5-.5c.3-.3.6-.3 1 0l1.1.8c.5.3.5.8.1 1.2-.6.7-1.3 1-2.4.6-2.6-1-4.8-3-5.5-5.4-.2-.6.2-1.1.8-1.4z"/></svg>"""
     return f"""<div class="anz">
 <section class="section" id="atendimento"><span class="section-eyebrow">ONDE ATENDEMOS</span><h2 class="section-title">Atendimento 24h em Sergipe.</h2>
 <p class="section-description">Nossa equipe está à disposição todos os dias da semana nas seguintes cidades:</p>
 <div class="area-grid"><div class="area"><i>⌖</i> Aracaju</div><div class="area"><i>⌖</i> Nossa Senhora do Socorro</div><div class="area"><i>⌖</i> Barra dos Coqueiros</div></div></section>
-<section class="contact-panel" id="contato"><div><h2>Precisou desentupir?<br>Chame o Ancelmo.</h2><p>Entre em contato com nossa equipe para um orçamento gratuito. Visita gratuita, atendimento 24 horas e emissão de nota fiscal.</p><p><b>WhatsApp e telefone:</b> (79) 98167-7091</p></div><a class="btn" href="{WHATSAPP_ORCAMENTO}" target="_blank" rel="noopener noreferrer">✆ &nbsp;Falar no WhatsApp ↗</a></section>
-<footer class="foot"><div><b>DESENTUPIDOR ANCELMO</b><small>Desentupimento residencial e comercial • Sergipe</small><small>Atendimento 24 horas, todos os dias da semana.</small></div><div class="links"><a href="{WHATSAPP}" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="{INSTAGRAM}" target="_blank" rel="noopener noreferrer">Instagram</a><a href="{YOUTUBE}" target="_blank" rel="noopener noreferrer">YouTube</a><a href="{TELEFONE}">Ligar</a></div></footer>
-<a class="floating-cta" href="{WHATSAPP_ORCAMENTO}" target="_blank" rel="noopener noreferrer" aria-label="Solicitar orçamento no WhatsApp"><span>✆</span> Orçamento grátis</a>
+<section class="contact-panel" id="contato"><div><h2>Precisou desentupir?<br>Chame o Ancelmo.</h2><p>Entre em contato com nossa equipe para um orçamento gratuito. Visita gratuita, atendimento 24 horas e emissão de nota fiscal.</p><p><b>WhatsApp e telefone:</b> (79) 98167-7091</p></div><a class="btn" href="{WHATSAPP_ORCAMENTO}" target="_blank" rel="noopener noreferrer">{WHATSAPP_ICON} Falar no WhatsApp ↗</a></section>
+<footer class="site-footer" id="rodape">
+  <div class="site-footer-inner">
+    <div class="footer-main">
+      <div class="footer-company">
+        <strong class="footer-wordmark">DESENTUPIDOR<br>ANCELMO</strong>
+        <p>Desentupimento residencial e comercial em Aracaju, Nossa Senhora do Socorro e Barra dos Coqueiros.</p>
+        <span class="footer-tag"><span class="live-dot" aria-hidden="true"></span> Plantão 24h • Todos os dias</span>
+      </div>
+      <nav aria-label="Atalhos do rodapé">
+        <div class="footer-title">Acesso rápido</div>
+        <div class="footer-shortcuts">
+          <a href="#inicio">Início</a>
+          <a href="#servicos">Nossos serviços</a>
+          <a href="#galeria">Galeria de fotos</a>
+          <a href="#videos">Vídeos e Shorts</a>
+          <a href="#avaliacoes">Avaliações de clientes</a>
+          <a href="#atendimento">Onde atendemos</a>
+          <a href="{WHATSAPP_ORCAMENTO}" target="_blank" rel="noopener noreferrer" class="footer-wa-shortcut">{WHATSAPP_ICON} Pedir orçamento</a>
+        </div>
+      </nav>
+      <div class="footer-contacts">
+        <div class="footer-title">Fale com a gente</div>
+        <p>Visita gratuita • Emitimos nota fiscal</p>
+        <a class="footer-phone" href="{TELEFONE}" aria-label="Ligar para (79) 98167-7091">☎ (79) 98167-7091</a>
+        <div class="social-links" aria-label="Redes sociais">
+          <a href="{WHATSAPP_ORCAMENTO}" target="_blank" rel="noopener noreferrer" aria-label="Conversar no WhatsApp" title="WhatsApp"><span class="social-circle">{whatsapp_icon}</span><span>WhatsApp</span></a>
+          <a href="{INSTAGRAM}" target="_blank" rel="noopener noreferrer" aria-label="Acessar Instagram do Desentupidor Ancelmo" title="Instagram"><span class="social-circle">{instagram_icon}</span><span>Instagram</span></a>
+          <a href="{YOUTUBE}" target="_blank" rel="noopener noreferrer" aria-label="Acessar canal do YouTube" title="YouTube"><span class="social-circle">{youtube_icon}</span><span>YouTube</span></a>
+        </div>
+      </div>
+    </div>
+    <section class="footer-respect" id="respeito" aria-labelledby="respeito-title">
+      <div class="footer-respect-icon" aria-hidden="true">🤝</div>
+      <div>
+        <h2 id="respeito-title">Sua casa, seu espaço, nosso respeito.</h2>
+        <p>Na <strong>Desentupidora Ancelmo</strong>, todas as pessoas são bem-vindas! Atendemos <strong>mulheres, pessoas LGBTQIA+ e toda a comunidade</strong> com respeito, discrição e profissionalismo. Sabemos que receber um profissional em casa exige confiança. Por isso, ouvimos você, explicamos o serviço com clareza e respeitamos sua privacidade. <strong>Aqui não há espaço para preconceito ou julgamentos.</strong></p>
+      </div>
+    </section>
+    <div class="footer-bottom"><span>© Desentupidor Ancelmo • Atendimento 24 horas • Sergipe</span><a href="#inicio">↑ Voltar ao início</a></div>
+  </div>
+</footer>
+<a class="floating-cta" href="{WHATSAPP_ORCAMENTO}" target="_blank" rel="noopener noreferrer" aria-label="Solicitar orçamento no WhatsApp">{WHATSAPP_ICON} <span>Orçamento grátis</span></a>
 </div>"""
 
 # ===================== EXECUÇÃO DO SITE =====================
@@ -887,4 +1107,5 @@ if not videos and not shorts:
     st.html(video_placeholder_html())
 
 st.html(video_footer_html())
+st.html(avaliacoes_html())
 st.html(footer_html())
