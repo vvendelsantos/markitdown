@@ -1,2 +1,2 @@
-streamlit
-markitdown[pdf]==0.1.7
+streamlit>=1.53,<2
+Pillow>=10,<13
