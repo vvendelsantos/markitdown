@@ -2,7 +2,7 @@
 
 Como publicar: crie um arquivo streamlit_app.py, cole este código e envie
 requirements.txt junto. Para a arte, use assets/arte_ancelmo.png.
-Para adicionar fotos por link use fotos.txt, e vídeos do YouTube em videos.txt.
+Para adicionar fotos por link use fotos.txt; novos vídeos e Shorts vão em videos.txt.
 """
 
 from __future__ import annotations
@@ -10,12 +10,14 @@ from __future__ import annotations
 import streamlit as st
 
 import base64
+import re
 from html import escape
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 from io import BytesIO
 from pathlib import Path
 
 from PIL import Image, ImageOps
+from streamlit.components.v1 import html as component_html
 
 BASE = Path(__file__).parent
 ASSETS = BASE / "assets"
@@ -27,6 +29,35 @@ WHATSAPP_ORCAMENTO = (
 INSTAGRAM = "https://www.instagram.com/desintupudorancelmo/"
 YOUTUBE = "https://www.youtube.com/@ancelmobatista2850"
 TELEFONE = "tel:+5579981677091"
+
+# GALERIA INICIAL — 8 fotos enviadas pelo Desentupidor Ancelmo.
+# Estes endereços já estão no código: mesmo sem fotos.txt, a galeria aparecerá.
+# Para incluir mais fotos depois, cadastre novos links no arquivo fotos.txt.
+FOTOS_INICIAIS = [
+    "https://i.postimg.cc/1t8xzBbF/1.jpg",
+    "https://i.postimg.cc/gJx90s1w/2.jpg",
+    "https://i.postimg.cc/xCXrd5BX/3.jpg",
+    "https://i.postimg.cc/W4WLjCY4/4.jpg",
+    "https://i.postimg.cc/N0JqYSCF/5.jpg",
+    "https://i.postimg.cc/9f85VKgM/6.jpg",
+    "https://i.postimg.cc/R0s59ypZ/7.jpg",
+    "https://i.postimg.cc/SKNFBkdQ/8.jpg",
+ ]
+
+# VÍDEOS DO YOUTUBE: 3 vídeos comuns + 3 Shorts fornecidos pelo cliente.
+# Para ACRESCENTAR novos vídeos, basta adicionar os links no arquivo videos.txt.
+# Para REMOVER algum destes seis iniciais, exclua o link de uma das listas abaixo.
+VIDEOS_INICIAIS = [
+    "https://www.youtube.com/watch?v=Op5WM8-2Rfg",
+    "https://www.youtube.com/watch?v=49CbK4PGwyg",
+    "https://www.youtube.com/watch?v=3JLlOVA-73U",
+]
+
+SHORTS_INICIAIS = [
+    "https://www.youtube.com/shorts/SVSnILp1Eug",
+    "https://www.youtube.com/shorts/ioxt6VlXcvU",
+    "https://www.youtube.com/shorts/XbjRSK7hsC4",
+]
 
 CSS = r"""
 <style>
@@ -103,6 +134,8 @@ html, body, .stApp, [data-testid="stAppViewContainer"] { background:var(--brand)
 .anz figure.photo{margin:0;background:white;border-radius:14px;overflow:hidden;border:5px solid #fff;color:var(--ink)}
 .anz .photo img{display:block;width:100%;height:230px;object-fit:cover}
 .anz .photo figcaption{padding:12px 14px;font-size:12px;font-weight:750}
+.anz .video-subtitle{margin-top:22px!important;margin-bottom:8px!important;font-size:clamp(21px,2.3vw,29px);font-weight:900;letter-spacing:-.02em}
+.anz .video-note{font-size:13px;color:#ffe7e1;margin-bottom:16px!important}
 .anz .video-callout{background:#fff;color:var(--ink);border-radius:17px;padding:30px;display:grid;grid-template-columns:1fr auto;gap:25px;align-items:center;margin-top:22px}
 .anz .video-callout strong{font-size:20px;font-weight:900;display:block}
 .anz .video-callout p{color:#775556;font-size:13px;margin-top:7px;line-height:1.55}
@@ -269,17 +302,34 @@ def gallery_html() -> str:
             except Exception:
                 continue
 
-    # Links diretos de imagens públicas em fotos.txt (um por linha).
-    # É possível escrever: https://exemplo.com/foto.jpg | Limpeza de caixa de gordura
+    # Fotos enviadas pelo cliente, agora incorporadas ao próprio código.
+    # Links adicionais podem ser colocados em fotos.txt, sem repetir os anteriores.
+    enderecos = []
+    vistos = set()
+    for indice, link in enumerate(FOTOS_INICIAIS, start=1):
+        if endereco_publico(link) and link not in vistos:
+            enderecos.append((link, f"Nosso trabalho • Foto {indice:02d}"))
+            vistos.add(link)
+
     for linha in linhas_de_arquivo("fotos.txt"):
         endereco, separador, descricao = linha.partition("|")
         link = endereco.strip()
-        if not endereco_publico(link):
+        if not endereco_publico(link) or link in vistos:
             continue
-        legenda = descricao.strip() if separador and descricao.strip() else "Serviço realizado"
-        legenda = escape(legenda)
+        legenda = descricao.strip() if separador and descricao.strip() else f"Nosso trabalho • Foto {len(enderecos) + 1:02d}"
+        enderecos.append((link, legenda))
+        vistos.add(link)
+
+    for link, descricao in enderecos:
+        legenda = escape(descricao)
         link_html = escape(link, quote=True)
-        photos.append(f'<figure class="photo"><img loading="lazy" src="{link_html}" alt="{legenda}" referrerpolicy="no-referrer"><figcaption>{legenda}</figcaption></figure>')
+        # Uma foto clicada abre seu arquivo original, sem cortes, em outra aba.
+        photos.append(
+            f'<figure class="photo"><a href="{link_html}" target="_blank" rel="noopener noreferrer" '
+            f'aria-label="Ampliar {legenda}">'
+            f'<img loading="lazy" src="{link_html}" alt="{legenda}" referrerpolicy="no-referrer"></a>'
+            f'<figcaption>{legenda}</figcaption></figure>'
+        )
 
     content = (
         '<div class="photos-grid">' + "".join(photos[:24]) + '</div>'
@@ -287,7 +337,7 @@ def gallery_html() -> str:
         f'<div class="placeholder"><div><div class="placeholder-icon">▧</div><b>Em breve: fotos dos nossos serviços</b><p>Adicionaremos aqui registros reais dos atendimentos. Enquanto isso, acompanhe nossas novidades no Instagram.</p><a href="{INSTAGRAM}" target="_blank" rel="noopener noreferrer">Conheça nosso Instagram ↗</a></div></div>'
     )
     return f"""<div class="anz"><section class="section" id="galeria">
-<span class="section-eyebrow">NA PRÁTICA</span><h2 class="section-title">Nosso trabalho em imagens.</h2><p class="section-description">Veja registros de serviços realizados pelo Desentupidor Ancelmo.</p>{content}
+<span class="section-eyebrow">NA PRÁTICA</span><h2 class="section-title">Nosso trabalho em imagens.</h2><p class="section-description">Veja registros de serviços realizados pelo Desentupidor Ancelmo. Toque em uma foto para abrir a imagem completa.</p>{content}
 </section></div>"""
 
 
@@ -297,6 +347,81 @@ def video_heading_html() -> str:
 
 def video_placeholder_html() -> str:
     return f"""<div class="anz"><div class="placeholder"><div><div class="placeholder-icon">▶</div><b>Vídeos do nosso canal</b><p>Os vídeos individuais serão exibidos aqui quando seus links forem cadastrados. Você já pode acessar o canal no YouTube.</p><a href="{YOUTUBE}" target="_blank" rel="noopener noreferrer">Assistir no YouTube ↗</a></div></div></div>"""
+
+
+def video_subheading_html(titulo: str, descricao: str) -> str:
+    return (f'<div class="anz"><h3 class="video-subtitle">{escape(titulo)}</h3>'
+            f'<p class="video-note">{escape(descricao)}</p></div>')
+
+
+def youtube_id_e_tipo(link: str) -> tuple[str, bool] | None:
+    """Identifica links válidos do YouTube e verifica se são Shorts."""
+    try:
+        url = urlparse(link.strip())
+        host = (url.hostname or "").lower()
+        if url.scheme not in ("https", "http"):
+            return None
+        if host in ("youtube.com", "www.youtube.com", "m.youtube.com"):
+            caminho = url.path.rstrip("/")
+            if caminho == "/watch":
+                codigo = parse_qs(url.query).get("v", [""])[0]
+                short = False
+            elif caminho.startswith("/shorts/"):
+                codigo = caminho.split("/")[-1]
+                short = True
+            elif caminho.startswith("/embed/"):
+                codigo = caminho.split("/")[-1]
+                short = False
+            else:
+                return None
+        elif host in ("youtu.be", "www.youtu.be"):
+            codigo = url.path.strip("/")
+            short = False
+        else:
+            return None
+        if not re.fullmatch(r"[a-zA-Z0-9_-]{11}", codigo):
+            return None
+        return codigo, short
+    except ValueError:
+        return None
+
+
+def carregar_videos() -> tuple[list[str], list[str]]:
+    """Consolida listas iniciais e videos.txt, sem repetir nenhum vídeo."""
+    videos, shorts, cadastrados = [], [], set()
+    for link in [*VIDEOS_INICIAIS, *SHORTS_INICIAIS, *linhas_de_arquivo("videos.txt")]:
+        # videos.txt aceita links, um por linha. Linhas começando com # são ignoradas.
+        resultado = youtube_id_e_tipo(link)
+        if not resultado:
+            continue
+        codigo, eh_short = resultado
+        if codigo in cadastrados:
+            continue
+        cadastrados.add(codigo)
+        (shorts if eh_short else videos).append(codigo)
+    return videos, shorts
+
+
+def html_short(codigo: str, numero: int) -> str:
+    """Vídeo vertical incorporado, em formato 9:16, para Shorts."""
+    return f"""<!doctype html>
+<html lang="pt-BR"><head><meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {{ box-sizing: border-box; }}
+body {{ margin: 0; background: transparent; font-family: Arial, sans-serif; color: white; }}
+.card {{ width: min(100%, 316px); margin: 0 auto; }}
+.frame {{ width:100%; aspect-ratio:9/16; border-radius:14px; overflow:hidden;
+          background:#7c110d; border:3px solid rgba(255,255,255,.95); }}
+iframe {{ display:block; border:0; width:100%; height:100%; }}
+.label {{ margin-top:10px; text-align:center; font-size:13px; font-weight:700; }}
+</style></head><body>
+<div class="card"><div class="frame"><iframe
+  src="https://www.youtube-nocookie.com/embed/{codigo}?playsinline=1"
+  title="Short {numero} do Desentupidor Ancelmo"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>
+<div class="label">Short {numero:02d}</div></div>
+</body></html>"""
 
 
 def video_footer_html() -> str:
@@ -326,20 +451,25 @@ st.html(header_services())
 st.html(gallery_html())
 st.html(video_heading_html())
 
-# Cole em videos.txt os links individuais dos vídeos, um por linha.
-# Exemplo: https://www.youtube.com/watch?v=IDENTIFICADOR
-videos = []
-for linha in linhas_de_arquivo("videos.txt"):
-    url = linha.strip()
-    if url.startswith(("https://www.youtube.com/watch?", "https://youtu.be/", "https://www.youtube.com/shorts/", "https://m.youtube.com/watch?")):
-        videos.append(url)
+# Os primeiros 3 vídeos e 3 Shorts estão nas listas no início deste código.
+# Para acrescentar novos, basta colocar a URL em videos.txt (uma por linha).
+videos, shorts = carregar_videos()
 
 if videos:
-    colunas = st.columns(2, gap="medium")
-    for pos, url in enumerate(videos[:8]):
-        with colunas[pos % 2]:
-            st.video(url)
-else:
+    st.html(video_subheading_html("Vídeos dos nossos serviços", "Assista diretamente aqui no site."))
+    colunas = st.columns(3, gap="medium")
+    for pos, codigo in enumerate(videos):
+        with colunas[pos % 3]:
+            st.video(f"https://www.youtube.com/watch?v={codigo}")
+
+if shorts:
+    st.html(video_subheading_html("Shorts do Ancelmo", "Vídeos rápidos no formato vertical, reproduzíveis aqui."))
+    colunas = st.columns(3, gap="medium")
+    for pos, codigo in enumerate(shorts):
+        with colunas[pos % 3]:
+            component_html(html_short(codigo, pos + 1), height=590, scrolling=False)
+
+if not videos and not shorts:
     st.html(video_placeholder_html())
 
 st.html(video_footer_html())
